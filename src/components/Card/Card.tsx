@@ -1,15 +1,25 @@
 import { useState } from 'react';
 import { Result } from '../../global/type';
+import { Button, Flex } from "antd";
+import { deleteUser } from '../../utils/modifyUser';
+import { Link } from 'react-router-dom';
+
 
 interface ICardProps {
   user: Result;
+  index: number;
 }
 
-export const Card = (props: ICardProps) => {
+const Card = (props: ICardProps) => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
+
+  document.addEventListener('onClick', (e) => {
+    e.stopPropagation()
+  })
+
   return (
     <div
-      className='cursor-pointer z-10 relative bg-white w-[18rem] h-[25rem] rounded-2xl text-slate-900'
+      className='cursor-pointer z-10 relative bg-white w-[18rem] h-fit rounded-2xl text-slate-900 pb-4'
       onClick={() => setShowDetail(!showDetail)}
     >
       {!showDetail ? (
@@ -35,13 +45,20 @@ export const Card = (props: ICardProps) => {
             src={props.user.picture.medium}
           ></img>
           <h2 className='text-2xl font-bold'>{props.user.name.first + ' ' + props.user.name.last}</h2>
-          {/* <p>Date of birth: {props.user.dob.date}</p> */}
           <p>Nationality: {props.user.nat}</p>
-          <p>City: {props.user.location.city}</p>
+          <p>City: {props.user?.location?.city ?? undefined}</p>
           <p>Email: {props.user.email}</p>
           <p>Phone: {props.user.phone}</p>
+          <Flex gap="small">
+            <Link to="/update">
+              <Button type='default'>Update</Button>
+            </Link>
+            <Button danger type='default' onClick={() => deleteUser(props.index)}>Delete</Button>
+          </Flex>
         </div>
       )}
     </div>
   );
 };
+
+export default Card

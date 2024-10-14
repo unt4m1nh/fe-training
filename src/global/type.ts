@@ -3,6 +3,11 @@ export type RootObject = {
     info: Info;
 };
 
+export type StorageData = {
+    name: Name,
+    age: number,
+}
+
 export type Result = {
     gender: string;
     name: Name;

@@ -1,13 +1,20 @@
 import './App.css'
-import { CardList } from './components/CardList/CardList'
+
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import Home from './page/Home/Home'
+import Create from './page/Create/Create'
+import Update from './page/Update/Update'
 
 function App() {
 
   return (
-    <>
-      <h1 className='text-5xl font-bold my-8'>Member Card</h1>
-      <CardList />
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/modify' element={<Create />} />
+        <Route path='/update' element={<Update />} />
+      </Routes>
+    </Router>
   )
 }
 
