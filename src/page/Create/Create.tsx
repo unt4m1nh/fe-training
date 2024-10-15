@@ -1,6 +1,7 @@
-import { Button, Form, Input, Select, Space } from "antd"
+import { Button, Col, Form, Input, Row, Select, Space } from "antd"
 import { createUser } from "../../utils/modifyUser";
 import { useNavigate } from "react-router-dom";
+import { nameFormatting } from "../../utils/nameFormatting";
 
 
 const { Option } = Select;
@@ -10,23 +11,18 @@ const Create = () => {
     const [form] = Form.useForm()
     const navigate = useNavigate()
 
-    form.getFieldValue('name')
-
     const submit = () => {
         const newUser = {
             gender: form.getFieldValue('gender'),
 
-            name: {
-                title: '',
-                first: form.getFieldValue('name').split(' ').at(0),
-                last: form.getFieldValue('name').split(' ').at(0)
-            },
+            name: nameFormatting(form.getFieldValue('name')),
             email: form.getFieldValue('email'),
             dob: {
                 date: '',
                 age: form.getFieldValue('age')
             },
             phone: form.getFieldValue('phone'),
+            city: form.getFieldValue('city'),
             picture: {
                 large: 'https://tse1.mm.bing.net/th/id/OIP.d4aCLxnkE61dQKn4manesQHaEf?w=303&h=183&c=7&r=0&o=5&pid=1.7',
                 medium: 'https://tse1.mm.bing.net/th/id/OIP.d4aCLxnkE61dQKn4manesQHaEf?w=303&h=183&c=7&r=0&o=5&pid=1.7',
@@ -49,36 +45,54 @@ const Create = () => {
                 //onFinish={}
                 className="bg-white w-full rounded-2xl p-4"
             >
-                <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item name="age" label="Age" rules={[{ required: true }]}>
-                    <Input type="number"/>
-                </Form.Item>
-                <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-                    <Select
-                        placeholder="Select Gender"
-                        //onChange={onGenderChange}
-                        allowClear
-
-                    >
-                        <Option value="male">male</Option>
-                        <Option value="female">female</Option>
-                        <Option value="other">other</Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item name="nat" label="Nationality" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item name="city" label="City" >
-                    <Input />
-                </Form.Item>
-                <Form.Item name="email" label="Email" >
-                    <Input />
-                </Form.Item>
-                <Form.Item name="phone" label="Phone">
-                    <Input />
-                </Form.Item>
+                <Row gutter={16}>
+                    <Col span={14}>
+                        <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col >
+                        <Form.Item name="age" label="Age" rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={16}>
+                    <Col span={6}>
+                        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
+                            <Select
+                                placeholder="Select Gender"
+                                allowClear
+                            >
+                                <Option value="male">Male</Option>
+                                <Option value="female">Female</Option>
+                                <Option value="other">Other</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col>
+                        <Form.Item name="nat" label="Nationality" rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col>
+                        <Form.Item name="city" label="City" >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={16}>
+                    <Col span={11}>
+                        <Form.Item name="email" label="Email" >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col span={11}>
+                        <Form.Item name="phone" label="Phone">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
                 <Form.Item>
                     <Space>
                         <Button type="primary" htmlType="submit">

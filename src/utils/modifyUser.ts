@@ -2,14 +2,13 @@ import { Result } from "../global/type"
 
 type UserData = Partial<Result>
 
-let store = window.localStorage
+const store = window.localStorage
 
 export const createUser = (newUser: UserData) => {
     const storage = store.getItem('user')
     let currentUsers: any = JSON.stringify(storage ?? '')
     currentUsers = JSON.parse(storage ?? '');
     if (currentUsers) {
-        console.log(typeof currentUsers)
         currentUsers.push(newUser)
     }
     store.setItem('user', JSON.stringify(currentUsers))

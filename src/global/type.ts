@@ -1,13 +1,3 @@
-export type RootObject = {
-    results: Result[];
-    info: Info;
-};
-
-export type StorageData = {
-    name: Name,
-    age: number,
-}
-
 export type Result = {
     gender: string;
     name: Name;
@@ -18,25 +8,25 @@ export type Result = {
     registered: Registered;
     phone: string;
     cell: string;
-    id: Id;
+    id: Id | null;
     picture: Picture;
     nat: string;
 };
 
-type Name = {
+export type Name = {
     title: string;
     first: string;
     last: string;
 };
 
 type Location = {
-    street: Street;
+    street: Street | null;
     city: string;
-    state: string;
-    country: string;
-    postcode: number | string;  // postcode can sometimes be a string depending on the country
-    coordinates: Coordinates;
-    timezone: Timezone;
+    state: string | null;
+    country: string | null;
+    postcode: number | string | null;  
+    coordinates: Coordinates | null;
+    timezone: Timezone | null;
 };
 
 type Street = {
@@ -83,11 +73,4 @@ type Picture = {
     large: string;
     medium: string;
     thumbnail: string;
-};
-
-type Info = {
-    seed: string;
-    results: number;
-    page: number;
-    version: string;
 };

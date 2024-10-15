@@ -19,25 +19,26 @@ const CardList = () => {
       })
     } else {
       setUsers(JSON.parse(storage ?? '  ') as Result[]);
-      setIsLoading(false);  
+      setIsLoading(false);
     }
   }, []);
 
+  if (isLoading) return <h1>Loading ...</h1>
+  if (!users) return <h1>Data not found</h1> 
+  
   return (
     <>
-      {isLoading ? (
-        <h1>Loading ...</h1>
-      ) : (
-        <div className='flex flex-row gap-4 flex-wrap'>
-          {users?.map((user, index) => (
-            <Card
-              key={index}
-              user={user}
-              index={index}
-            />
-          ))}
-        </div>
-      )}
+
+      <div className='flex flex-row gap-4 flex-wrap'>
+        {users.map((user, index) => (
+          <Card
+            key={index}
+            user={user}
+            index={index}
+          />
+        ))}
+      </div>
+
     </>
   );
 };
