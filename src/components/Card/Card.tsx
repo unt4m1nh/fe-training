@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Result } from '../../global/type';
 import { Button, Flex } from "antd";
 import { deleteUser } from '../../utils/modifyUser';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 interface ICardProps {
@@ -11,6 +11,7 @@ interface ICardProps {
 }
 
 const Card = (props: ICardProps) => {
+  const navigate = useNavigate()
   const [showDetail, setShowDetail] = useState<boolean>(false);
 
   document.addEventListener('onClick', (e) => {
@@ -50,10 +51,13 @@ const Card = (props: ICardProps) => {
           <p>Email: {props.user.email}</p>
           <p>Phone: {props.user.phone}</p>
           <Flex gap="small">
-            <Link to="/update">
+            <Link to={'/update/' + props.index}>
               <Button type='default'>Update</Button>
             </Link>
-            <Button danger type='default' onClick={() => deleteUser(props.index)}>Delete</Button>
+            <Button danger type='default' onClick={() => {
+              deleteUser(props.index)
+              navigate(0)
+            }}>Delete</Button>
           </Flex>
         </div>
       )}
