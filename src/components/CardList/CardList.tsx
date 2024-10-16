@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 
-import axios from 'axios';
+
 import { Result } from '../../global/type';
+import api from '../../api/api';
 
 const CardList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -10,13 +11,15 @@ const CardList = () => {
 
   useEffect(() => {
     const storage = window.localStorage.getItem('user');
-    console.log(storage)
     if (storage === null) {
-      axios.get('https://randomuser.me/api/?results=10').then((res) => {
-        setUsers(res.data.results)
-        window.localStorage.setItem('user', JSON.stringify(res.data.results))
-        setIsLoading(false)
-      })
+      api.get("/?results=10")
+        .then((res) => {
+          setUsers(res.data.results)
+          window.localStorage.setItem('user', JSON.stringify(res.data.results))
+          setIsLoading(false)
+        }).catch((error) => {
+          console.error("API error:", error);
+        })
     } else {
       setUsers(JSON.parse(storage ?? '  ') as Result[]);
       setIsLoading(false);
@@ -24,8 +27,8 @@ const CardList = () => {
   }, []);
 
   if (isLoading) return <h1>Loading ...</h1>
-  if (!users) return <h1>Data not found</h1> 
-  
+  if (!users) return <h1>Data not found</h1>
+
   return (
     <>
 

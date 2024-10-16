@@ -11,13 +11,13 @@ const { Option } = Select;
 
 
 const Update = () => {
-    const { user } = useParams<{ user: string }>()
+    const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
     const [form] = Form.useForm()
     let userToUpdate: Partial<Result> | null = null
     const currentUsers = getUserList()
-    if (currentUsers && user) {
-        userToUpdate = currentUsers[Number(user)] as Partial<Result>
+    if (currentUsers && id) {
+        userToUpdate = currentUsers[Number(id)] as Partial<Result>
         form.setFieldsValue({
             name: userToUpdate.name ? userToUpdate.name?.first + ' ' + userToUpdate.name?.last : '',
             gender: userToUpdate.gender,
@@ -51,7 +51,7 @@ const Update = () => {
             picture: userToUpdate?.picture,
             nat: form.getFieldValue('nat'),
         }
-        updateUser(newUser, Number(user))
+        updateUser(newUser, Number(id))
         navigate('/')
     }
 
